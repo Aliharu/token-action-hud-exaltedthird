@@ -52,6 +52,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                             game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'gambit', weapon: item.system }).render(true);
                         }
                         break;
+                    case ACTION_TYPES.ROLL_CHARM:
+                        if (game.rollForm) {
+                            game.rollForm.addCharm(item);
+                        }
+                        break;
                     case ACTION_TYPES.DEFENSIVE_CHARM:
                         if (item?.parent) {
                             game.socket.emit('system.exaltedthird', {

@@ -26,24 +26,32 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         _getCharms(actor, tokenId) {
-            // const rollCharms = actor.items.filter(item => item.type === 'charm' && item.system.diceroller.enabled).map(item => {
-            //     return {
-            //         id: item.id,
-            //         name: item.name,
-            //         encodedValue: [ACTION_TYPES.CHARM, actor.id, tokenId, item.id].join(this.delimiter),
-            //         selected: true,
-            //     }
-            // });
-            const defensiveCharms = actor.items.filter(item => item.type === 'charm' && item.system.diceroller.opposedbonuses.enabled).map(item => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                    img: item.img,
-                    encodedValue: [ACTION_TYPES.DEFENSIVE_CHARM, actor.id, tokenId, item.id].join(this.delimiter),
-                    selected: true,
-                }
-            });
-            this.addActionsToActionList(defensiveCharms, { id: IDS.DEFENSIVE_CHARM_ID, type: 'system' });
+            for (let [subList, charmList] of Object.entries(actor.rollcharms)) {
+                this.addSubcategoryToActionList({ id: IDS.ROLL_CHARM_ID, type: 'system' }, {id: `roll_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+                const charms = charmList.list.map(item => {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        img: item.img,
+                        encodedValue: [ACTION_TYPES.ROLL_CHARM, actor.id, tokenId, item.id].join(this.delimiter),
+                        selected: true,
+                    }
+                });
+                this.addActionsToActionList(charms, {id: `roll_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+            }
+            for (let [subList, charmList] of Object.entries(actor.defensecharms)) {
+                this.addSubcategoryToActionList({ id: IDS.DEFENSIVE_CHARM_ID, type: 'system' }, {id: `defense_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+                const charms = charmList.list.map(item => {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        img: item.img,
+                        encodedValue: [ACTION_TYPES.DEFENSIVE_CHARM, actor.id, tokenId, item.id].join(this.delimiter),
+                        selected: true,
+                    }
+                });
+                this.addActionsToActionList(charms, {id: `defense_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+            }
         }
 
         _getActions(actor, tokenId) {
@@ -57,9 +65,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 sorcery: 'Ex3.Sorcery',
             };
             const poolIcons = {
-                command: 'icons/environment/people/charge.webp',
+                command: 'icons/environment/people/infantry-army.webp',
                 grapple: 'icons/skills/melee/strike-chain-whip-blue.webp',
-                joinbattle: 'icons/magic/movement/trail-streak-impact-blue.webp',
+                joinbattle: 'icons/skills/melee/swords-parry-block-yellow.webp',
                 movement: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
                 readintentions: 'icons/skills/trades/academics-investigation-study-blue.webp',
                 social: 'icons/skills/social/diplomacy-handshake-yellow.webp',
@@ -278,9 +286,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const combatActionIcons = {
                 accuracy: 'icons/svg/target.svg',
                 damage: 'icons/svg/blood.svg',
-                command: 'icons/environment/people/charge.webp',
+                command: 'icons/environment/people/infantry-army.webp',
                 grappleControl: 'icons/skills/melee/strike-chain-whip-blue.webp',
-                joinBattle: 'icons/magic/movement/trail-streak-impact-blue.webp',
+                joinBattle: 'icons/skills/melee/swords-parry-block-yellow.webp',
                 rush: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
                 disengage: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
             };
@@ -332,15 +340,36 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         _getSavedRolls(actor, tokenId) {
+            const rollTypeIcons = {
+                accuracy: 'icons/svg/target.svg',
+                damage: 'icons/svg/blood.svg',
+                withering: 'systems/exaltedthird/assets/icons/sword-clash.svg',
+                decisive: 'systems/exaltedthird/assets/icons/bloody-sword.svg',
+                gambit: 'systems/exaltedthird/assets/icons/drop-weapon.svg',
+                command: 'icons/environment/people/infantry-army.webp',
+                grappleControl: 'icons/skills/melee/strike-chain-whip-blue.webp',
+                joinBattle: 'icons/skills/melee/swords-parry-block-yellow.webp',
+                rush: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
+                disengage: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
+                readIntentions: 'icons/skills/trades/academics-investigation-study-blue.webp',
+                social: 'icons/skills/social/diplomacy-handshake-yellow.webp',
+                working: 'icons/magic/symbols/runes-star-pentagon-orange.webp',
+                craft: 'icons/skills/trades/smithing-anvil-silver-red.webp',
+                rout: 'icons/environment/people/charge.webp',
+            };
             if (actor.system.savedRolls) {
                 var actions = []
                 for (let [id, roll] of Object.entries(actor.system.savedRolls)) {
+                    let img = 'systems/exaltedthird/assets/icons/d10.svg';
+                    if(rollTypeIcons[roll.rollType]) {
+                        img = rollTypeIcons[roll.rollType];
+                    }
                     actions.push(
                         {
                             id: id,
                             name: roll.name,
                             encodedValue: [ACTION_TYPES.SAVED_ROLL, actor.id, tokenId, id].join(this.delimiter),
-                            img: 'systems/exaltedthird/assets/icons/d10.svg',
+                            img: img,
                             selected: true,
                         }
                     )

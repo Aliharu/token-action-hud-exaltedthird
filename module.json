@@ -21,8 +21,8 @@
         "type": "system",
         "compatibility": [
           {
-            "minimum": "1.10.1",
-            "verified": "1.10.1"
+            "minimum": "1.10.2",
+            "verified": "1.10.2"
           }
         ]
       }
