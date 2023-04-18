@@ -7,23 +7,35 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
     RollHandler = class RollHandler extends coreModule.api.RollHandler {
         doHandleActionEvent(event, encodedValue) {
             let payload = encodedValue.split("|");
-    
+
             if (payload.length != 4) {
                 super.throwInvalidValueErr();
             }
-    
+
             let macroType = payload[0];
             let actorId = payload[1];
             let tokenId = payload[2];
             let actionId = payload[3];
-    
+
             let actor = Utils.getActor(actorId, tokenId);
             if (this.isRightClick(event) && actionId) {
                 actor.items.get(actionId)?.sheet.render(true);
                 return;
             }
-            if (macroType !== ACTION_TYPES.SAVED_ROLL) {
-                const item = actor.items.get(actionId);
+            const item = actor.items.get(actionId);
+            const poolMap = {
+                working: 'intelligence',
+                social: 'social',
+                readIntentions: 'readintentions',
+                sorcery: 'sorcery',
+                command: 'command',
+                grappleControl: 'grapple',
+                disengage: 'movement',
+                rush: 'movement',
+                joinBattle: 'joinbattle',
+            }
+            let pool = poolMap[actionId];
+            if (item) {
                 switch (macroType) {
                     case ACTION_TYPES.WITHERING_ATTACK:
                         if (item?.parent) {
@@ -40,10 +52,77 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                             game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'gambit', weapon: item.system }).render(true);
                         }
                         break;
+                    case ACTION_TYPES.DEFENSIVE_CHARM:
+                        if (item?.parent) {
+                            game.socket.emit('system.exaltedthird', {
+                                type: 'addOpposingCharm',
+                                data: item,
+                                actorId: item.parent._id,
+                            });
+                            if (game.rollForm) {
+                                game.rollForm.addOpposingCharm(item);
+                            }
+                        }
+                        break;
+                    case (ACTION_TYPES.MARTIAL_ART):
+                        if (item?.parent) {
+                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'ability', ability: item.id }).render(true);
+                        }
+                        break;
+                    case (ACTION_TYPES.CRAFT):
+                        if (item?.parent) {
+                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'ability', ability: item.id }).render(true);
+                        }
+                        break;
+                    case (ACTION_TYPES.ACTION_ROLL):
+                        if (item?.parent) {
+                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'ability', pool: item.id }).render(true);
+                        }
+                        break;
                 }
             }
             else {
-                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollId: actionId }).render(true);
+                switch (macroType) {
+                    case ACTION_TYPES.POOL_ROLL:
+                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: 'ability', pool: actionId }).render(true);
+                        break;
+                    case (ACTION_TYPES.SPECIFIC_ACTION):
+                        if (actor.type === 'npc') {
+                            if (pool) {
+                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId, pool: pool }).render(true);
+                            }
+                            else {
+                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
+                            }
+                        }
+                        else {
+                            game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
+                        }
+                        break;
+                    case (ACTION_TYPES.COMBAT_ACTION):
+                        if (actor.type === 'npc') {
+                            if (pool) {
+                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId, pool: pool }).render(true);
+                            }
+                            else {
+                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
+                            }
+                        }
+                        else {
+                            game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
+                        }
+                        break;
+                    case ACTION_TYPES.CRAFT_ACTION:
+                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: 'craft', ability: "craft", craftType: actionId, craftRating: 2 }).render(true);
+                        break;
+                    case ACTION_TYPES.ABILITY_ROLL:
+                        const abilityObject = actor.system.abilities[actionId];
+                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: 'ability', ability: actionId, attribute: abilityObject.prefattribute }).render(true);
+                        break;
+                    case ACTION_TYPES.SAVED_ROLL:
+                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollId: actionId }).render(true);
+                        break;
+                }
             }
         }
     }
