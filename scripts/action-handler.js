@@ -38,6 +38,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 return {
                     id: item.id,
                     name: item.name,
+                    img: item.img,
                     encodedValue: [ACTION_TYPES.DEFENSIVE_CHARM, actor.id, tokenId, item.id].join(this.delimiter),
                     selected: true,
                 }
@@ -55,11 +56,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 social: 'Ex3.Social',
                 sorcery: 'Ex3.Sorcery',
             };
+            const poolIcons = {
+                command: 'icons/environment/people/charge.webp',
+                grapple: 'icons/skills/melee/strike-chain-whip-blue.webp',
+                joinbattle: 'icons/magic/movement/trail-streak-impact-blue.webp',
+                movement: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
+                readintentions: 'icons/skills/trades/academics-investigation-study-blue.webp',
+                social: 'icons/skills/social/diplomacy-handshake-yellow.webp',
+                sorcery: 'systems/exaltedthird/assets/icons/magic-swirl.svg',
+            };
             const poolActions = [];
             for (let [id, pool] of Object.entries(pools)) {
                 poolActions.push(
                     {
                         id: id,
+                        img: poolIcons[id],
                         name: game.i18n.localize(pool),
                         encodedValue: [ACTION_TYPES.POOL_ROLL, actor.id, tokenId, id].join(this.delimiter),
                         selected: true,
@@ -69,6 +80,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             actor.items.filter(item => item.type === 'action').map(item => {
                 poolActions.push({
                     id: item.id,
+                    img: item.img,
                     name: item.name,
                     encodedValue: [ACTION_TYPES.ACTION_ROLL, actor.id, tokenId, item.id].join(this.delimiter),
                     selected: true,
@@ -106,10 +118,39 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 thrown: 'Ex3.Thrown',
                 war: 'Ex3.War',
             };
+            const abilityIcons = {
+                archery: "icons/skills/ranged/arrow-flying-white-blue.webp", 
+                athletics: "icons/skills/movement/feet-winged-boots-glowing-yellow.webp", 
+                awareness: "icons/magic/control/hypnosis-mesmerism-eye-tan.webp", 
+                brawl: "icons/skills/melee/unarmed-punch-fist-yellow-red.webp", 
+                bureaucracy: "icons/skills/trades/academics-merchant-scribe.webp", 
+                craft: "icons/skills/trades/smithing-anvil-silver-red.webp", 
+                dodge: "icons/magic/movement/trail-streak-zigzag-yellow.webp", 
+                integrity: "icons/magic/holy/meditation-chi-focus-blue.webp", 
+                investigation: "icons/skills/trades/academics-investigation-study-blue.webp", 
+                larceny: "icons/skills/trades/security-locksmith-key-gray.webp",
+                linguistics: "icons/skills/trades/academics-scribe-quill-gray.webp",
+                lore: "icons/skills/trades/academics-study-reading-book.webp", 
+                martialarts: "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+                medicine: "icons/tools/cooking/mortar-stone-yellow.webp", 
+                melee: "icons/skills/melee/weapons-crossed-swords-yellow.webp", 
+                occult: "icons/magic/symbols/runes-star-pentagon-orange.webp", 
+                performance: "icons/skills/trades/music-notes-sound-blue.webp", 
+                presence: "icons/magic/control/silhouette-aura-energy.webp", 
+                resistance: "icons/magic/defensive/shield-barrier-deflect-gold.webp", 
+                ride: "icons/environment/creatures/horse-brown.webp", 
+                sail: "icons/skills/trades/profession-sailing-ship.webp", 
+                socialize: "icons/skills/social/diplomacy-handshake-yellow.webp", 
+                stealth: "icons/magic/perception/shadow-stealth-eyes-purple.webp", 
+                survival: "icons/magic/nature/wolf-paw-glow-large-green.webp", 
+                thrown: "icons/skills/ranged/daggers-thrown-salvo-orange.webp", 
+                war: "icons/environment/people/charge.webp", 
+            }
             const crafts = actor.items.filter(item => item.type === 'craft').map(item => {
                 return {
                     id: item.id,
                     name: item.name,
+                    img: item.img,
                     encodedValue: [ACTION_TYPES.CRAFT, actor.id, tokenId, item.id].join(this.delimiter),
                     selected: true,
                 }
@@ -118,6 +159,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 return {
                     id: item.id,
                     name: item.name,
+                    img: item.img,
                     encodedValue: [ACTION_TYPES.MARTIAL_ART, actor.id, tokenId, item.id].join(this.delimiter),
                     selected: true,
                 }
@@ -127,6 +169,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 abilityActions.push(
                     {
                         id: id,
+                        img: abilityIcons[id],
                         name: game.i18n.localize(ability),
                         encodedValue: [ACTION_TYPES.ABILITY_ROLL, actor.id, tokenId, id].join(this.delimiter),
                         selected: true,
@@ -145,23 +188,27 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     {
                         id: 'basic',
                         name: game.i18n.localize('Ex3.Basic'),
+                        img: "icons/skills/trades/smithing-anvil-silver-red.webp",
                         encodedValue: [ACTION_TYPES.CRAFT_ACTION, actor.id, tokenId, 'basic'].join(this.delimiter),
                         selected: true,
                     },
                     {
                         id: 'major',
+                        img: "icons/skills/trades/smithing-anvil-silver-red.webp",
                         name: game.i18n.localize('Ex3.Major'),
                         encodedValue: [ACTION_TYPES.CRAFT_ACTION, actor.id, tokenId, 'major'].join(this.delimiter),
                         selected: true,
                     },
                     {
                         id: 'superior',
+                        img: "icons/skills/trades/smithing-anvil-silver-red.webp",
                         name: game.i18n.localize('Ex3.Superior'),
                         encodedValue: [ACTION_TYPES.CRAFT_ACTION, actor.id, tokenId, 'superior'].join(this.delimiter),
                         selected: true,
                     },
                     {
                         id: 'legendary',
+                        img: "icons/skills/trades/smithing-anvil-silver-red.webp",
                         name: game.i18n.localize('Ex3.Legendary'),
                         encodedValue: [ACTION_TYPES.CRAFT_ACTION, actor.id, tokenId, 'legendary'].join(this.delimiter),
                         selected: true,
@@ -178,6 +225,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     {
                         id: id,
                         name: game.i18n.localize(action),
+                        img: id === 'social' ? 'icons/skills/social/diplomacy-handshake-yellow.webp' : 'icons/skills/trades/academics-investigation-study-blue.webp',
                         encodedValue: [ACTION_TYPES.SPECIFIC_ACTION, actor.id, tokenId, id].join(this.delimiter),
                         selected: true,
                     }
@@ -187,6 +235,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 specificActionList.push(
                     {
                         id: 'sorcery',
+                        img: 'systems/exaltedthird/assets/icons/magic-swirl.svg',
                         name: game.i18n.localize('Ex3.Sorcery'),
                         encodedValue: [ACTION_TYPES.SPECIFIC_ACTION, actor.id, tokenId, 'sorcery'].join(this.delimiter),
                         selected: true,
@@ -196,6 +245,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     {
                         id: 'working',
                         name: game.i18n.localize('Ex3.SorcerousWorking'),
+                        img: 'icons/magic/symbols/runes-star-pentagon-orange.webp',
                         encodedValue: [ACTION_TYPES.SPECIFIC_ACTION, actor.id, tokenId, 'working'].join(this.delimiter),
                         selected: true,
                     }
@@ -206,6 +256,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     {
                         id: 'rout',
                         name: game.i18n.localize('Ex3.Rout'),
+                        img: 'icons/environment/people/charge.webp',
                         encodedValue: [ACTION_TYPES.SPECIFIC_ACTION, actor.id, tokenId, 'rout'].join(this.delimiter),
                         selected: true,
                     }
@@ -224,11 +275,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 rush: 'Ex3.Rush',
                 disengage: 'Ex3.Disengage',
             };
+            const combatActionIcons = {
+                accuracy: 'icons/svg/target.svg',
+                damage: 'icons/svg/blood.svg',
+                command: 'icons/environment/people/charge.webp',
+                grappleControl: 'icons/skills/melee/strike-chain-whip-blue.webp',
+                joinBattle: 'icons/magic/movement/trail-streak-impact-blue.webp',
+                rush: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
+                disengage: 'icons/skills/movement/feet-winged-boots-glowing-yellow.webp',
+            };
             const combatActionsList = []
             for (let [id, action] of Object.entries(combatActions)) {
                 combatActionsList.push(
                     {
                         id: id,
+                        img: combatActionIcons[id],
                         name: game.i18n.localize(action),
                         encodedValue: [ACTION_TYPES.COMBAT_ACTION, actor.id, tokenId, id].join(this.delimiter),
                         selected: true,
