@@ -30,7 +30,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             //     return {
             //         id: item.id,
             //         name: item.name,
-            //         encodedValue: [ACTION_TYPES.DEFENSIVE_CHARM, actor.id, tokenId, item.id].join(this.delimiter),
+            //         encodedValue: [ACTION_TYPES.CHARM, actor.id, tokenId, item.id].join(this.delimiter),
             //         selected: true,
             //     }
             // });

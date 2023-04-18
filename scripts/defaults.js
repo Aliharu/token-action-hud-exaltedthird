@@ -39,7 +39,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 name: coreModule.api.Utils.i18n('Ex3.Charms'),
                 subcategories: [
                     { ...subcategories.charms, nestId: 'charms_charms' },
-                    { ...subcategories.charms, nestId: 'roll_charms' },
+                    { ...subcategories.roll_charms, nestId: 'roll_charms' },
                     { ...subcategories.defensive_charms, nestId: 'charms_defensive_charms' },
                 ]
             },
