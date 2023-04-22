@@ -154,25 +154,16 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 thrown: "icons/skills/ranged/daggers-thrown-salvo-orange.webp", 
                 war: "icons/environment/people/charge.webp", 
             }
-            const crafts = actor.items.filter(item => item.type === 'craft').map(item => {
+            const customAbilities = actor.items.filter(item => item.type === 'customability').map(item => {
                 return {
                     id: item.id,
                     name: item.name,
                     img: item.img,
-                    encodedValue: [ACTION_TYPES.CRAFT, actor.id, tokenId, item.id].join(this.delimiter),
+                    encodedValue: [ACTION_TYPES.CUSTOM_ABILITY_ROLL, actor.id, tokenId, item.id].join(this.delimiter),
                     selected: true,
                 }
             });
-            const martialarts = actor.items.filter(item => item.type === 'martialart').map(item => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                    img: item.img,
-                    encodedValue: [ACTION_TYPES.MARTIAL_ART, actor.id, tokenId, item.id].join(this.delimiter),
-                    selected: true,
-                }
-            });
-            const abilityActions = []
+            let abilityActions = []
             for (let [id, ability] of Object.entries(abilities)) {
                 abilityActions.push(
                     {
@@ -184,8 +175,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     }
                 )
             }
-            this.addActionsToActionList(crafts, { id: IDS.CRAFT_ID, type: 'system' });
-            this.addActionsToActionList(martialarts, { id: IDS.MARTIAL_ARTS_ID, type: 'system' });
+            abilityActions = abilityActions.concat(customAbilities);
             this.addActionsToActionList(abilityActions, { id: IDS.ABILITY_ID, type: 'system' });
         }
 

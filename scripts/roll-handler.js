@@ -69,12 +69,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                             }
                         }
                         break;
-                    case (ACTION_TYPES.MARTIAL_ART):
-                        if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'ability', ability: item.id }).render(true);
-                        }
-                        break;
-                    case (ACTION_TYPES.CRAFT):
+                    case (ACTION_TYPES.CUSTOM_ABILITY_ROLL):
                         if (item?.parent) {
                             game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'ability', ability: item.id }).render(true);
                         }
