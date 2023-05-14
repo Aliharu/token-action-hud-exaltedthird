@@ -7,7 +7,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
     ActionHandler = class ActionHandler extends coreModule.api.ActionHandler {
         /** @override */
         /** @override */
-        async buildSystemActions(subcategoryIds) {
+        async buildSystemActions(groupIds) {
             const token = this?.token;
             if (!token) return;
             const tokenId = token.id;
@@ -27,7 +27,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
         _getCharms(actor, tokenId) {
             for (let [subList, charmList] of Object.entries(actor.rollcharms)) {
-                this.addSubcategoryToActionList({ id: IDS.ROLL_CHARM_ID, type: 'system' }, {id: `roll_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+                this.addGroup({id: `roll_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'}, { id: IDS.ROLL_CHARM_ID, type: 'system' });
                 const charms = charmList.list.map(item => {
                     return {
                         id: item.id,
@@ -37,10 +37,10 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         selected: true,
                     }
                 });
-                this.addActionsToActionList(charms, {id: `roll_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+                this.addActions(charms, {id: `roll_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
             }
             for (let [subList, charmList] of Object.entries(actor.defensecharms)) {
-                this.addSubcategoryToActionList({ id: IDS.DEFENSIVE_CHARM_ID, type: 'system' }, {id: `defense_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+                this.addGroup({id: `defense_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'}, { id: IDS.DEFENSIVE_CHARM_ID, type: 'system' });
                 const charms = charmList.list.map(item => {
                     return {
                         id: item.id,
@@ -50,7 +50,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         selected: true,
                     }
                 });
-                this.addActionsToActionList(charms, {id: `defense_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
+                this.addActions(charms, {id: `defense_${subList}`, name: game.i18n.localize(charmList.name), type: 'system-derived'});
             }
         }
 
@@ -94,7 +94,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     selected: true,
                 });
             });
-            this.addActionsToActionList(poolActions, { id: IDS.ACTION_ID, type: 'system' });
+            this.addActions(poolActions, { id: IDS.ACTION_ID, type: 'system' });
         }
 
         _getAbilities(actor, tokenId) {
@@ -176,7 +176,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 )
             }
             abilityActions = abilityActions.concat(customAbilities);
-            this.addActionsToActionList(abilityActions, { id: IDS.ABILITY_ID, type: 'system' });
+            this.addActions(abilityActions, { id: IDS.ABILITY_ID, type: 'system' });
         }
 
         _getSpecificActions(actor, tokenId) {
@@ -212,7 +212,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         selected: true,
                     },
                 ]
-                this.addActionsToActionList(craftActionList, { id: IDS.CRAFT_ACTION_ID, type: 'system' });
+                this.addActions(craftActionList, { id: IDS.CRAFT_ACTION_ID, type: 'system' });
             }
             const specificActions = {
                 readintentions: 'Ex3.ReadIntentions',
@@ -260,7 +260,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     }
                 )
             }
-            this.addActionsToActionList(specificActionList, { id: IDS.SPECIFIC_ACTION_ID, type: 'system' });
+            this.addActions(specificActionList, { id: IDS.SPECIFIC_ACTION_ID, type: 'system' });
         }
 
         _getCombat(actor, tokenId) {
@@ -321,11 +321,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     selected: true,
                 }
             });
-            this.addActionsToActionList(combatActionsList, { id: IDS.COMBAT_ACTION_ID, type: 'system' });
+            this.addActions(combatActionsList, { id: IDS.COMBAT_ACTION_ID, type: 'system' });
             if (witheringActions) {
-                this.addActionsToActionList(witheringActions, { id: IDS.WITHERING_ATTACK_ID, type: 'system' });
-                this.addActionsToActionList(decisiveActions, { id: IDS.DECISIVE_ATTACK_ID, type: 'system' });
-                this.addActionsToActionList(gambitActions, { id: IDS.GAMBIT_ATTACK_ID, type: 'system' });
+                this.addActions(witheringActions, { id: IDS.WITHERING_ATTACK_ID, type: 'system' });
+                this.addActions(decisiveActions, { id: IDS.DECISIVE_ATTACK_ID, type: 'system' });
+                this.addActions(gambitActions, { id: IDS.GAMBIT_ATTACK_ID, type: 'system' });
             }
         }
 
@@ -364,7 +364,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         }
                     )
                 }
-                this.addActionsToActionList(actions, { id: IDS.SAVED_ROLL_ID, type: 'system' });
+                this.addActions(actions, { id: IDS.SAVED_ROLL_ID, type: 'system' });
             }
 
         }

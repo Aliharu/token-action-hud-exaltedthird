@@ -1,68 +1,64 @@
-import { SUBCATEGORY } from './constants.js';
-/**
- * Default categories and subcategories
- */
+import { GROUP } from './constants.js';
+
 export let DEFAULTS = null
 
 Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
-    const subcategories = SUBCATEGORY
-    Object.values(subcategories).forEach(subcategory => {
-        subcategory.name = coreModule.api.Utils.i18n(subcategory.name)
-        subcategory.listName = `Subcategory: ${coreModule.api.Utils.i18n(subcategory.name)}`
+    const groups = GROUP
+    Object.values(groups).forEach(group => {
+        group.name = coreModule.api.Utils.i18n(group.name)
+        group.listName = `Group: ${coreModule.api.Utils.i18n(group.name)}`
     })
-    const subcategoriesArray = Object.values(subcategories)
+    const groupsArray  = Object.values(groups)
     DEFAULTS = {
-        categories: [
+        layout: [
             {
                 nestId: 'actions',
                 id: 'actions',
                 name: coreModule.api.Utils.i18n('Ex3.Actions'),
-                subcategories: [
-                    { ...subcategories.actions, nestId: 'actions_actions' },
-                    { ...subcategories.specific_actions, nestId: 'actions_specific_actions' },
-                    { ...subcategories.craft_actions, nestId: 'actions_craft_actions' },
+                groups: [
+                    { ...groups.actions, nestId: 'actions_actions' },
+                    { ...groups.specific_actions, nestId: 'actions_specific-actions' },
+                    { ...groups.craft_actions, nestId: 'actions_craft-actions' },
                 ]
             },
             {
                 nestId: 'abilities',
                 id: 'abilities',
                 name: coreModule.api.Utils.i18n('Ex3.Abilities'),
-                subcategories: [
-                    { ...subcategories.abilities, nestId: 'abilities_abilities' },
-                    { ...subcategories.crafts, nestId: 'abilities_crafts' },
-                    { ...subcategories.martialarts, nestId: 'abilities_martialarts' },
+                groups: [
+                    { ...groups.abilities, nestId: 'abilities_abilities' },
                 ]
             },
             {
                 nestId: 'charms',
                 id: 'charms',
                 name: coreModule.api.Utils.i18n('Ex3.Charms'),
-                subcategories: [
-                    { ...subcategories.charms, nestId: 'charms_charms' },
-                    { ...subcategories.roll_charms, nestId: 'charms_roll_charms' },
-                    { ...subcategories.defensive_charms, nestId: 'charms_defensive_charms' },
+                groups: [
+                    { ...groups.charms, nestId: 'charms_charms' },
+                    { ...groups.roll_charms, nestId: 'charms_roll-charms' },
+                    { ...groups.defensive_charms, nestId: 'charms_defensive-charms' },
                 ]
             },
             {
                 nestId: 'combat',
                 id: 'combat',
                 name: coreModule.api.Utils.i18n('Ex3.Combat'),
-                subcategories: [
-                    { ...subcategories.combat_actions, nestId: 'combat_combat_actions' },
-                    { ...subcategories.withering_attacks, nestId: 'combat_withering_attacks' },
-                    { ...subcategories.decisive_attacks, nestId: 'combat_decisive_attacks' },
-                    { ...subcategories.gambit_attacks, nestId: 'combat_gambit_attacks' }
+                groups: [
+                    { ...groups.combat_actions, nestId: 'combat_combat-actions' },
+                    { ...groups.withering_attacks, nestId: 'combat_withering-attacks' },
+                    { ...groups.decisive_attacks, nestId: 'combat_decisive-attacks' },
+                    { ...groups.gambit_attacks, nestId: 'combat_gambit-attacks' }
                 ]
             },
             {
-                nestId: 'saved_rolls',
-                id: 'saved_rolls',
+                nestId: 'saved-rolls',
+                id: 'saved-rolls',
                 name: coreModule.api.Utils.i18n('Ex3.SavedRolls'),
-                subcategories: [
-                    { ...subcategories.saved_rolls, nestId: 'saved_rolls_saved_rolls' }
+                groups: [
+                    { ...groups.saved_rolls, nestId: 'saved-rolls_saved-rolls' }
                 ]
             },
         ],
-        subcategories: subcategoriesArray
+        groups: groupsArray 
     }
 })
