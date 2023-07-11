@@ -47,7 +47,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     { ...groups.combat_actions, nestId: 'combat_combat-actions' },
                     { ...groups.withering_attacks, nestId: 'combat_withering-attacks' },
                     { ...groups.decisive_attacks, nestId: 'combat_decisive-attacks' },
-                    { ...groups.gambit_attacks, nestId: 'combat_gambit-attacks' }
+                    { ...groups.gambit_attacks, nestId: 'combat_gambit-attacks' },
+                    { ...groups.split_withering_attacks, nestId: 'combat_split-withering-attacks' },
+                    { ...groups.split_decisive_attacks, nestId: 'combat_split-decisive-attacks' },
+                    { ...groups.split_gambit_attacks, nestId: 'combat_split-gambit-attacks' },
+
                 ]
             },
             {

@@ -52,6 +52,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                             game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'gambit', weapon: item.system }).render(true);
                         }
                         break;
+                    case ACTION_TYPES.SPLIT_WITHERING_ATTACK:
+                        if (item?.parent) {
+                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'withering-split', weapon: item.system }).render(true);
+                        }
+                        break;
+                    case ACTION_TYPES.SPLIT_DECISIVE_ATTACK:
+                        if (item?.parent) {
+                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'decisive-split', weapon: item.system }).render(true);
+                        }
+                        break;
+                    case ACTION_TYPES.SPLIT_GAMBIT_ATTACK:
+                        if (item?.parent) {
+                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'gambit-split', weapon: item.system }).render(true);
+                        }
+                        break;
                     case ACTION_TYPES.ROLL_CHARM:
                         if (game.rollForm) {
                             game.rollForm.addCharm(item);

@@ -5,12 +5,12 @@
   "version": "#{VERSION}#",
   "compatibility": {
     "minimum": 10,
-    "verified": 10
+    "verified": 11
   },
   "authors": [
     {
       "name": "Aliharu",
-      "discord": "Aliharu#8736",
+      "discord": "aliharu",
       "flags": {}
     }
   ],
@@ -21,8 +21,8 @@
         "type": "system",
         "compatibility": [
           {
-            "minimum": "1.12.2",
-            "verified": "1.12.2"
+            "minimum": "2.2.3",
+            "verified": "2.2.3"
           }
         ]
       }
@@ -34,8 +34,8 @@
         "compatibility": [
           {
             "minimum": "1.4.4",
-            "maximum": "1.4.4",
-            "verified": "1.4.4"
+            "maximum": "1.4.11",
+            "verified": "1.4.11"
           }
         ]
       }
