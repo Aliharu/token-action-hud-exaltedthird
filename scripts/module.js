@@ -1,6 +1,6 @@
 import { SystemManager } from './system-manager.js'
 
-Hooks.once('ready', async () => {
+Hooks.once('tokenActionHudCoreApiReady', async () => {
     const MODULE_ID = 'token-action-hud-exaltedthird';
     const REQUIRED_CORE_MODULE_VERSION = '1.4'
     const module = game.modules.get(MODULE_ID);

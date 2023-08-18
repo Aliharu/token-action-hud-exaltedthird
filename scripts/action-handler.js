@@ -1,4 +1,3 @@
-import { Utils } from '../../token-action-hud-core/scripts/token-action-hud-core.min.js'
 import { IDS, ACTION_TYPES } from './constants.js';
 
 export let ActionHandler = null
@@ -299,7 +298,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     id: item.id,
                     name: item.name,
                     encodedValue: [ACTION_TYPES.WITHERING_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: Utils.getImage(item),
+                    img: coreModule.api.Utils.getImage(item),
                     selected: true,
                 }
             });
@@ -308,7 +307,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     id: item.id,
                     name: item.name,
                     encodedValue: [ACTION_TYPES.DECISIVE_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: Utils.getImage(item),
+                    img: coreModule.api.Utils.getImage(item),
                     selected: true,
                 }
             });
@@ -317,7 +316,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     id: item.id,
                     name: item.name,
                     encodedValue: [ACTION_TYPES.GAMBIT_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: Utils.getImage(item),
+                    img: coreModule.api.Utils.getImage(item),
                     selected: true,
                 }
             });
@@ -327,7 +326,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     id: item.id,
                     name: item.name,
                     encodedValue: [ACTION_TYPES.SPLIT_WITHERING_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: Utils.getImage(item),
+                    img: coreModule.api.Utils.getImage(item),
                     selected: true,
                 }
             });
@@ -336,7 +335,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     id: item.id,
                     name: item.name,
                     encodedValue: [ACTION_TYPES.SPLIT_DECISIVE_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: Utils.getImage(item),
+                    img: coreModule.api.Utils.getImage(item),
                     selected: true,
                 }
             });
@@ -345,7 +344,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     id: item.id,
                     name: item.name,
                     encodedValue: [ACTION_TYPES.SPLIT_GAMBIT_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: Utils.getImage(item),
+                    img: coreModule.api.Utils.getImage(item),
                     selected: true,
                 }
             });

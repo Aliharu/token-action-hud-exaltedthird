@@ -1,5 +1,4 @@
 import { ACTION_TYPES } from './constants.js';
-import { Utils } from '../../token-action-hud-core/scripts/token-action-hud-core.min.js'
 
 export let RollHandler = null;
 
@@ -17,7 +16,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             let tokenId = payload[2];
             let actionId = payload[3];
 
-            let actor = Utils.getActor(actorId, tokenId);
+            let actor = coreModule.api.Utils.getActor(actorId, tokenId);
             if (this.isRightClick(event) && actionId) {
                 actor.items.get(actionId)?.sheet.render(true);
                 return;

@@ -22,7 +22,7 @@
         "compatibility": [
           {
             "minimum": "2.2.3",
-            "verified": "2.2.3"
+            "verified": "2.4.0"
           }
         ]
       }
@@ -34,7 +34,6 @@
         "compatibility": [
           {
             "minimum": "1.4.4",
-            "maximum": "1.4.11",
             "verified": "1.4.11"
           }
         ]
