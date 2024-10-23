@@ -38,32 +38,44 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 switch (macroType) {
                     case ACTION_TYPES.WITHERING_ATTACK:
                         if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'withering', weapon: item.system }).render(true);
+                            item.parent.actionRoll(
+                                { rollType: 'withering', weapon: item.system }
+                            );
                         }
                         break;
                     case ACTION_TYPES.DECISIVE_ATTACK:
                         if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'decisive', weapon: item.system }).render(true);
+                            item.parent.actionRoll(
+                                { rollType: 'decisive', weapon: item.system }
+                            );
                         }
                         break;
                     case ACTION_TYPES.GAMBIT_ATTACK:
                         if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'gambit', weapon: item.system }).render(true);
+                            item.parent.actionRoll(
+                                { rollType: 'gambit', weapon: item.system }
+                            );
                         }
                         break;
                     case ACTION_TYPES.SPLIT_WITHERING_ATTACK:
                         if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'withering-split', weapon: item.system }).render(true);
+                            item.parent.actionRoll(
+                                { rollType: 'withering-split', weapon: item.system }
+                            );
                         }
                         break;
                     case ACTION_TYPES.SPLIT_DECISIVE_ATTACK:
                         if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'decisive-split', weapon: item.system }).render(true);
+                            item.parent.actionRoll(
+                                { rollType: 'decisive-split', weapon: item.system }
+                            );
                         }
                         break;
                     case ACTION_TYPES.SPLIT_GAMBIT_ATTACK:
                         if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'gambit-split', weapon: item.system }).render(true);
+                            item.parent.actionRoll(
+                                { rollType: 'gambit-split', weapon: item.system }
+                            );
                         }
                         break;
                     case ACTION_TYPES.ROLL_CHARM:
@@ -84,13 +96,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                         }
                         break;
                     case (ACTION_TYPES.CUSTOM_ABILITY_ROLL):
-                        if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'ability', ability: item.id }).render(true);
-                        }
-                        break;
                     case (ACTION_TYPES.ACTION_ROLL):
                         if (item?.parent) {
-                            game.rollForm = new game.exaltedthird.RollForm(item.parent, {}, {}, { rollType: 'ability', pool: item.id }).render(true);
+                            item.parent.actionRoll(
+                                { rollType: 'ability', pool: item.id }
+                            );
                         }
                         break;
                 }
@@ -98,43 +108,52 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             else {
                 switch (macroType) {
                     case ACTION_TYPES.POOL_ROLL:
-                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: 'ability', pool: actionId }).render(true);
+                        actor.actionRoll(
+                            { rollType: 'ability', pool: actionId }
+                        );
                         break;
                     case (ACTION_TYPES.SPECIFIC_ACTION):
-                        if (actor.type === 'npc') {
-                            if (pool) {
-                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId, pool: pool }).render(true);
-                            }
-                            else {
-                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
-                            }
-                        }
-                        else {
-                            game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
-                        }
-                        break;
                     case (ACTION_TYPES.COMBAT_ACTION):
                         if (actor.type === 'npc') {
                             if (pool) {
-                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId, pool: pool }).render(true);
+                                actor.actionRoll(
+                                    {
+                                        rollType: actionId,
+                                        pool: pool
+                                    }
+                                );
                             }
                             else {
-                                game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
+                                actor.actionRoll(
+                                    {
+                                        rollType: actionId,
+                                    }
+                                );
                             }
                         }
                         else {
-                            game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: actionId }).render(true);
+                            actor.actionRoll(
+                                {
+                                    rollType: actionId,
+                                }
+                            );
                         }
                         break;
                     case ACTION_TYPES.CRAFT_ACTION:
-                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: 'craft', ability: "craft", craftType: actionId, craftRating: 2 }).render(true);
+                        actor.actionRoll(
+                            { rollType: 'craft', ability: "craft", craftType: actionId, craftRating: 2 }
+                        );
                         break;
                     case ACTION_TYPES.ABILITY_ROLL:
                         const abilityObject = actor.system.abilities[actionId];
-                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollType: 'ability', ability: actionId, attribute: abilityObject.prefattribute }).render(true);
+                        actor.actionRoll(
+                            { rollType: 'ability', ability: actionId, attribute: abilityObject.prefattribute }
+                        );
                         break;
                     case ACTION_TYPES.SAVED_ROLL:
-                        game.rollForm = new game.exaltedthird.RollForm(actor, {}, {}, { rollId: actionId }).render(true);
+                        actor.actionRoll(
+                            { rollId: actionId }
+                        );
                         break;
                 }
             }
