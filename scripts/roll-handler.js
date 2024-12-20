@@ -4,7 +4,7 @@ export let RollHandler = null;
 
 Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
     RollHandler = class RollHandler extends coreModule.api.RollHandler {
-        doHandleActionEvent(event, encodedValue) {
+        handleActionClick(event, encodedValue) {
             let payload = encodedValue.split("|");
 
             if (payload.length != 4) {
@@ -17,7 +17,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             let actionId = payload[3];
 
             let actor = coreModule.api.Utils.getActor(actorId, tokenId);
-            if (this.isRightClick(event) && actionId) {
+            if (this.isRightClick && actionId) {
                 actor.items.get(actionId)?.sheet.render(true);
                 return;
             }

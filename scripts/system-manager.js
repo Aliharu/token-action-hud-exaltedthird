@@ -12,7 +12,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /** @override */
-        doGetActionHandler(categoryManager) {
+        getActionHandler(categoryManager) {
             return new ActionHandler(categoryManager)
         }
 
@@ -23,11 +23,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         }
 
         /** @override */
-        doGetRollHandler(handlerId) {
+        getRollHandler(handlerId) {
             return new RollHandler()
         }
 
-        async doRegisterDefaultFlags() {
+        async registerDefaults() {
             return DEFAULTS;
         }
     }
