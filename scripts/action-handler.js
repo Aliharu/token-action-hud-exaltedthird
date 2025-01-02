@@ -264,8 +264,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
         _getCombat(actor, tokenId) {
             const combatActions = {
-                accuracy: 'Ex3.Accuracy',
-                damage: 'Ex3.Damage',
                 joinBattle: 'Ex3.JoinBattle',
                 command: 'Ex3.Command',
                 grappleControl: 'Ex3.GrappleControl',
@@ -273,8 +271,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 disengage: 'Ex3.Disengage',
             };
             const combatActionIcons = {
-                accuracy: 'icons/svg/target.svg',
-                damage: 'icons/svg/blood.svg',
                 command: 'icons/environment/people/infantry-army.webp',
                 grappleControl: 'icons/skills/melee/strike-chain-whip-blue.webp',
                 joinBattle: 'icons/skills/melee/swords-parry-block-yellow.webp',
@@ -320,44 +316,11 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     selected: true,
                 }
             });
-            //Split
-            const splitWitheringActions = actor.items.filter(item => item.type === 'weapon').map(item => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                    encodedValue: [ACTION_TYPES.SPLIT_WITHERING_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: coreModule.api.Utils.getImage(item),
-                    selected: true,
-                }
-            });
-            const splitDecisiveActions = actor.items.filter(item => item.type === 'weapon').map(item => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                    encodedValue: [ACTION_TYPES.SPLIT_DECISIVE_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: coreModule.api.Utils.getImage(item),
-                    selected: true,
-                }
-            });
-            const splitGambitActions = actor.items.filter(item => item.type === 'weapon').map(item => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                    encodedValue: [ACTION_TYPES.SPLIT_GAMBIT_ATTACK, actor.id, tokenId, item.id].join(this.delimiter),
-                    img: coreModule.api.Utils.getImage(item),
-                    selected: true,
-                }
-            });
             this.addActions(combatActionsList, { id: IDS.COMBAT_ACTION_ID, type: 'system' });
             if (witheringActions) {
-                if(game.settings.get("exaltedthird", "showFullAttacks")) {
                     this.addActions(witheringActions, { id: IDS.WITHERING_ATTACK_ID, type: 'system' });
                     this.addActions(decisiveActions, { id: IDS.DECISIVE_ATTACK_ID, type: 'system' });
                     this.addActions(gambitActions, { id: IDS.GAMBIT_ATTACK_ID, type: 'system' });
-                }
-                this.addActions(splitWitheringActions, { id: IDS.SPLIT_WITHERING_ATTACK_ID, type: 'system' });
-                this.addActions(splitDecisiveActions, { id: IDS.SPLIT_DECISIVE_ATTACK_ID, type: 'system' });
-                this.addActions(splitGambitActions, { id: IDS.SPLIT_GAMBIT_ATTACK_ID, type: 'system' });
             }
         }
 

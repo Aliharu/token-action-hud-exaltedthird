@@ -39,42 +39,21 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     case ACTION_TYPES.WITHERING_ATTACK:
                         if (item?.parent) {
                             item.parent.actionRoll(
-                                { rollType: 'withering', weapon: item.system }
+                                { rollType: 'accuracy', attackType: 'withering', weapon: item.system }
                             );
                         }
                         break;
                     case ACTION_TYPES.DECISIVE_ATTACK:
                         if (item?.parent) {
                             item.parent.actionRoll(
-                                { rollType: 'decisive', weapon: item.system }
+                                { rollType: 'accuracy', attackType: 'decisive', weapon: item.system }
                             );
                         }
                         break;
                     case ACTION_TYPES.GAMBIT_ATTACK:
                         if (item?.parent) {
                             item.parent.actionRoll(
-                                { rollType: 'gambit', weapon: item.system }
-                            );
-                        }
-                        break;
-                    case ACTION_TYPES.SPLIT_WITHERING_ATTACK:
-                        if (item?.parent) {
-                            item.parent.actionRoll(
-                                { rollType: 'withering-split', weapon: item.system }
-                            );
-                        }
-                        break;
-                    case ACTION_TYPES.SPLIT_DECISIVE_ATTACK:
-                        if (item?.parent) {
-                            item.parent.actionRoll(
-                                { rollType: 'decisive-split', weapon: item.system }
-                            );
-                        }
-                        break;
-                    case ACTION_TYPES.SPLIT_GAMBIT_ATTACK:
-                        if (item?.parent) {
-                            item.parent.actionRoll(
-                                { rollType: 'gambit-split', weapon: item.system }
+                                { rollType: 'accuracy', attackType: 'gambit', weapon: item.system }
                             );
                         }
                         break;

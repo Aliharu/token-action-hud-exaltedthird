@@ -21,9 +21,8 @@
         "type": "system",
         "compatibility": [
           {
-            "minimum": "3.2.3",
-            "verified": "3.4.5",
-            "maximum": "3.4.6"
+            "minimum": "3.5.0",
+            "verified": "3.5.0"
           }
         ]
       }
